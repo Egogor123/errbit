@@ -1,0 +1,824 @@
+root@testvm:/home/gor# chef-client --version 
+Chef Infra Client: 16.18.0
+root@testvm:/home/gor# service chef-client restart
+Failed to restart chef-client.service: Unit chef-client.service not found.
+root@testvm:/home/gor# chef-client 
+[2022-11-06T14:58:33+00:00] WARN: Chef Infra Client 3039288 is running, will wait for it to finish and then run.
+Starting Chef Infra Client, version 16.18.0
+Patents: https://www.chef.io/patents
+resolving cookbooks for run list: ["errbit-last"]
+Synchronizing Cookbooks:
+  - errbit-last (0.1.0)
+Installing Cookbook Gems:
+Compiling Cookbooks...
+Converging 13 resources
+Recipe: errbit-last::mongodb
+  * apt_package[gnupg] action install (up to date)
+  * execute[publik_key] action run
+    - execute wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
+  * file[/etc/apt/sources.list.d/mongodb-org-4.4.list] action create (up to date)
+  * execute[update] action run
+    - execute sudo apt-get update
+  * apt_package[mongodb-org] action install (up to date)
+  * execute[autostart] action run
+    - execute systemctl enable mongod
+Recipe: errbit-last::installruby
+  * bash[rvm] action run
+    - execute "bash" 
+Recipe: errbit-last::errbit
+  * apt_package[python, git, nodejs] action install (up to date)
+  * git[/errbit_from_git] action sync (up to date)
+  * bash[chmod_gems] action run
+    - execute "bash" 
+  * bash[mongod] action run
+    - execute "bash" 
+  * bash[errbitStart] action run
+    
+    ================================================================================
+    Error executing action `run` on resource 'bash[errbitStart]'
+    ================================================================================
+    
+    Mixlib::ShellOut::ShellCommandFailed
+    ------------------------------------
+    Expected process to exit with [0], but received '1'
+    ---- Begin output of "bash"  ----
+    STDOUT: Fetching gem metadata from https://rubygems.org/.........
+    Using rake 13.0.6
+    Using concurrent-ruby 1.1.10
+    Using i18n 1.12.0
+    Using minitest 5.16.3
+    Using thread_safe 0.3.6
+    Using tzinfo 1.2.10
+    Using activesupport 5.0.7.2
+    Using builder 3.2.4
+    Using erubis 2.7.0
+    Using racc 1.6.0
+    Using nokogiri 1.13.8 (x86_64-linux)
+    Using rails-dom-testing 2.0.3
+    Using crass 1.0.6
+    Using loofah 2.18.0
+    Using rails-html-sanitizer 1.4.3
+    Using actionview 5.0.7.2
+    Using rack 2.2.4
+    Using rack-test 0.6.3
+    Using actionpack 5.0.7.2
+    Using globalid 1.0.0
+    Using activejob 5.0.7.2
+    Using mini_mime 1.1.2
+    Using mail 2.7.1
+    Using actionmailer 5.0.7.2
+    Using public_suffix 5.0.0
+    Using addressable 2.8.1
+    Using css_parser 1.11.0
+    Using htmlentities 4.3.4
+    Using premailer 1.16.0
+    Using actionmailer_inline_css 1.6.0
+    Using activemodel 5.0.7.2
+    Using activemodel-serializers-xml 1.0.2
+    Using arel 7.1.4
+    Using activerecord 5.0.7.2
+    Using multi_json 1.15.0
+    Using airbrake 4.3.8
+    Using ast 2.4.2
+    Using bcrypt 3.1.18
+    Using coderay 1.1.3
+    Using erubi 1.11.0
+    Using better_errors 2.9.1
+    Using bigdecimal 1.4.4
+    Using debug_inspector 1.1.0
+    Using binding_of_caller 1.0.0
+    Using bson 4.15.0
+    Using bundler 2.1.4
+    Using campy 1.0.0
+    Using matrix 0.4.2
+    Using regexp_parser 2.5.0
+    Using xpath 3.2.0
+    Using capybara 3.37.1
+    Using cliver 0.3.2
+    Using json 2.6.2
+    Using docile 1.4.0
+    Using simplecov-html 0.10.2
+    Using simplecov 0.16.1
+    Using sync 0.5.0
+    Using tins 1.31.1
+    Using term-ansicolor 1.7.1
+    Using thor 1.2.1
+    Using coveralls 0.8.23
+    Using decent_exposure 3.0.4
+    Using orm_adapter 0.5.0
+    Using method_source 1.0.0
+    Using railties 5.0.7.2
+    Using responders 3.0.1
+    Using warden 1.2.9
+    Using devise 4.8.1
+    Using diff-lcs 1.5.0
+    Using unf_ext 0.0.8.2
+    Using unf 0.1.4
+    Using domain_name 0.5.20190701
+    Using dotenv 2.8.1
+    Using dotenv-rails 2.8.1
+    Using request_store 1.5.1
+    Using ruby2_keywords 0.0.5
+    Using draper 4.0.2
+    Using launchy 2.5.0
+    Using email_spec 2.2.0
+    Using errbit_plugin 0.6.0
+    Using faraday-em_http 1.0.0
+    Using faraday-em_synchrony 1.0.0
+    Using faraday-excon 1.1.0
+    Using faraday-httpclient 1.0.1
+    Using multipart-post 2.2.3
+    Using faraday-multipart 1.0.4
+    Using faraday-net_http 1.0.1
+    Using faraday-net_http_persistent 1.2.0
+    Using faraday-patron 1.0.0
+    Using faraday-rack 1.0.0
+    Using faraday-retry 1.0.3
+    Using faraday 1.10.1
+    Using sawyer 0.8.2
+    Using octokit 4.21.0
+    Using errbit_github_plugin 0.3.0
+    Using execjs 2.8.1
+    Using fabrication 2.30.0
+    Using ffi 1.15.5
+    Using mime-types-data 3.2022.0105
+    Using mime-types 3.4.1
+    Using multi_xml 0.6.0
+    Using httparty 0.20.0
+    Using flowdock 0.7.1
+    Using font-awesome-rails 4.7.0.8
+    Using temple 0.8.2
+    Using tilt 2.0.11
+    Using haml 5.2.2
+    Using hashie 5.0.0
+    Using hoi 0.0.7
+    Using hoptoad_notifier 2.4.11
+    Using http-accept 1.7.0
+    Using http-cookie 1.0.5
+    Using jaro_winkler 1.5.4
+    Using jquery-rails 4.5.0
+    Using jwt 2.5.0
+    Using kaminari-core 1.2.2
+    Using kaminari-actionview 1.2.2
+    Using kaminari-activerecord 1.2.2
+    Using kaminari 1.2.2
+    Using mongo 2.18.1
+    Using mongoid 6.0.3
+    Using kaminari-mongoid 1.0.2
+    Using libv8-node 16.10.0.0 (x86_64-linux-musl)
+    Using rb-fsevent 0.11.1
+    Using rb-inotify 0.10.1
+    Using listen 3.0.8
+    Using rack-contrib 2.3.0
+    Using meta_request 0.7.3
+    Fetching mini_racer 0.6.3
+    Installing mini_racer 0.6.3 with native extensions
+    STDERR: Don't run Bundler as root. Bundler can ask for sudo if it is needed, and
+    installing your bundle as root will break this application for all non-root
+    users on this machine.
+    Warning: the running version of Bundler (2.1.4) is older than the version that created the lockfile (2.3.21). We suggest you to upgrade to the version that created the lockfile by running `gem install bundler:2.3.21`.
+    Gem::Ext::BuildError: ERROR: Failed to build gem native extension.
+    
+    current directory:
+    /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/gems/2.7.0/gems/mini_racer-0.6.3/ext/mini_racer_extension
+    /usr/local/rvm/rubies/ruby-2.7.6/bin/ruby -I
+    /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0 -r
+    ./siteconf20221106-3073292-64sgxn.rb extconf.rb
+    checking for -lpthread... yes
+    checking for whether -Wl,--exclude-libs=ALL  is accepted as LDFLAGS... no
+    creating Makefile
+    
+    current directory:
+    /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/gems/2.7.0/gems/mini_racer-0.6.3/ext/mini_racer_extension
+    make "DESTDIR=" clean
+    
+    current directory:
+    /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/gems/2.7.0/gems/mini_racer-0.6.3/ext/mini_racer_extension
+    make "DESTDIR="
+    compiling mini_racer_extension.cc
+    In file included from
+    /usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/ruby.h:2865,
+    from
+    /usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby.h:33,
+                     from mini_racer_extension.cc:2:
+    /usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:
+    In function 'VALUE ruby::backward::cxxanyargs::rb_rescue(VALUE (*)(...), VALUE,
+    VALUE (*)(...), VALUE)':
+    /usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:202:14:
+    warning: 'VALUE ruby::backward::cxxanyargs::rb_rescue(VALUE (*)(...), VALUE,
+    VALUE (*)(...), VALUE)' is deprecated: Use of ANYARGS in this function is
+    deprecated [-Wdeprecated-declarations]
+      202 |     func1_t *t = reinterpret_cast<func1_t*>(q);
+          |              ^
+    /usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:198:1:
+    note: declared here
+      198 | rb_rescue(type *q, VALUE w, type *e, VALUE r)
+          | ^~~~~~~~~
+    /usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:202:42:
+    warning: 'VALUE ruby::backward::cxxanyargs::rb_rescue(VALUE (*)(...), VALUE,
+    VALUE (*)(...), VALUE)' is deprecated: Use of ANYARGS in this function is
+    deprecated [-Wdeprecated-declarations]
+      202 |     func1_t *t = reinterpret_cast<func1_t*>(q);
+          |                                          ^
+    /usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:198:1:
+    note: declared here
+      198 | rb_rescue(type *q, VALUE w, type *e, VALUE r)
+          | ^~~~~~~~~
+    /usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:203:14:
+    warning: 'VALUE ruby::backward::cxxanyargs::rb_rescue(VALUE (*)(...), VALUE,
+    VALUE (*)(...), VALUE)' is deprecated: Use of ANYARGS in this function is
+    deprecated [-Wdeprecated-declarations]
+      203 |     func2_t *y = reinterpret_cast<func2_t*>(e);
+          |              ^
+    /usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:198:1:
+    note: declared here
+      198 | rb_rescue(type *q, VALUE w, type *e, VALUE r)
+          | ^~~~~~~~~
+    /usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:203:42:
+    warning: 'VALUE ruby::backward::cxxanyargs::rb_rescue(VALUE (*)(...), VALUE,
+    VALUE (*)(...), VALUE)' is deprecated: Use of ANYARGS in this function is
+    deprecated [-Wdeprecated-declarations]
+      203 |     func2_t *y = reinterpret_cast<func2_t*>(e);
+          |                                          ^
+    /usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:198:1:
+    note: declared here
+      198 | rb_rescue(type *q, VALUE w, type *e, VALUE r)
+          | ^~~~~~~~~
+    /usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:
+    In function 'VALUE ruby::backward::cxxanyargs::rb_rescue2(VALUE (*)(...), VALUE,
+    VALUE (*)(...), VALUE, ...)':
+    /usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:226:14:
+    warning: 'VALUE ruby::backward::cxxanyargs::rb_rescue2(VALUE (*)(...), VALUE,
+    VALUE (*)(...), VALUE, ...)' is deprecated: Use of ANYARGS in this function is
+    deprecated [-Wdeprecated-declarations]
+      226 |     func1_t *t = reinterpret_cast<func1_t*>(q);
+          |              ^
+    /usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:222:1:
+    note: declared here
+      222 | rb_rescue2(type *q, VALUE w, type *e, VALUE r, ...)
+          | ^~~~~~~~~~
+    /usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:226:42:
+    warning: 'VALUE ruby::backward::cxxanyargs::rb_rescue2(VALUE (*)(...), VALUE,
+    VALUE (*)(...), VALUE, ...)' is deprecated: Use of ANYARGS in this function is
+    deprecated [-Wdeprecated-declarations]
+      226 |     func1_t *t = reinterpret_cast<func1_t*>(q);
+          |                                          ^
+    /usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:222:1:
+    note: declared here
+      222 | rb_rescue2(type *q, VALUE w, type *e, VALUE r, ...)
+          | ^~~~~~~~~~
+    /usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:227:14:
+    warning: 'VALUE ruby::backward::cxxanyargs::rb_rescue2(VALUE (*)(...), VALUE,
+    VALUE (*)(...), VALUE, ...)' is deprecated: Use of ANYARGS in this function is
+    deprecated [-Wdeprecated-declarations]
+      227 |     func2_t *y = reinterpret_cast<func2_t*>(e);
+          |              ^
+    /usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:222:1:
+    note: declared here
+      222 | rb_rescue2(type *q, VALUE w, type *e, VALUE r, ...)
+          | ^~~~~~~~~~
+    /usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:227:42:
+    warning: 'VALUE ruby::backward::cxxanyargs::rb_rescue2(VALUE (*)(...), VALUE,
+    VALUE (*)(...), VALUE, ...)' is deprecated: Use of ANYARGS in this function is
+    deprecated [-Wdeprecated-declarations]
+      227 |     func2_t *y = reinterpret_cast<func2_t*>(e);
+          |                                          ^
+    /usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:222:1:
+    note: declared here
+      222 | rb_rescue2(type *q, VALUE w, type *e, VALUE r, ...)
+          | ^~~~~~~~~~
+    /usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:
+    In function 'VALUE ruby::backward::cxxanyargs::rb_ensure(VALUE (*)(...), VALUE,
+    VALUE (*)(...), VALUE)':
+    /usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:251:14:
+    warning: 'VALUE ruby::backward::cxxanyargs::rb_ensure(VALUE (*)(...), VALUE,
+    VALUE (*)(...), VALUE)' is deprecated: Use of ANYARGS in this function is
+    deprecated [-Wdeprecated-declarations]
+      251 |     func1_t *t = reinterpret_cast<func1_t*>(q);
+          |              ^
+    /usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:248:1:
+    note: declared here
+      248 | rb_ensure(type *q, VALUE w, type *e, VALUE r)
+          | ^~~~~~~~~
+    /usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:251:42:
+    warning: 'VALUE ruby::backward::cxxanyargs::rb_ensure(VALUE (*)(...), VALUE,
+    VALUE (*)(...), VALUE)' is deprecated: Use of ANYARGS in this function is
+    deprecated [-Wdeprecated-declarations]
+      251 |     func1_t *t = reinterpret_cast<func1_t*>(q);
+          |                                          ^
+    /usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:248:1:
+    note: declared here
+      248 | rb_ensure(type *q, VALUE w, type *e, VALUE r)
+          | ^~~~~~~~~
+    /usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:252:14:
+    warning: 'VALUE ruby::backward::cxxanyargs::rb_ensure(VALUE (*)(...), VALUE,
+    VALUE (*)(...), VALUE)' is deprecated: Use of ANYARGS in this function is
+    deprecated [-Wdeprecated-declarations]
+      252 |     func1_t *y = reinterpret_cast<func1_t*>(e);
+          |              ^
+    /usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:248:1:
+    note: declared here
+      248 | rb_ensure(type *q, VALUE w, type *e, VALUE r)
+          | ^~~~~~~~~
+    /usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:252:42:
+    warning: 'VALUE ruby::backward::cxxanyargs::rb_ensure(VALUE (*)(...), VALUE,
+    VALUE (*)(...), VALUE)' is deprecated: Use of ANYARGS in this function is
+    deprecated [-Wdeprecated-declarations]
+      252 |     func1_t *y = reinterpret_cast<func1_t*>(e);
+          |                                          ^
+    /usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:248:1:
+    note: declared here
+      248 | rb_ensure(type *q, VALUE w, type *e, VALUE r)
+          | ^~~~~~~~~
+    /usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:
+    In function 'VALUE ruby::backward::cxxanyargs::rb_thread_create(VALUE (*)(...),
+    void*)':
+    /usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:343:12:
+    warning: 'VALUE ruby::backward::cxxanyargs::rb_thread_create(VALUE (*)(...),
+    void*)' is deprecated: Use of ANYARGS in this function is deprecated
+    [-Wdeprecated-declarations]
+      343 |     ptr_t *e = reinterpret_cast<ptr_t*>(q);
+          |            ^
+    /usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:340:1:
+    note: declared here
+      340 | rb_thread_create(type *q, void *w)
+          | ^~~~~~~~~~~~~~~~
+    /usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:343:38:
+    warning: 'VALUE ruby::backward::cxxanyargs::rb_thread_create(VALUE (*)(...),
+    void*)' is deprecated: Use of ANYARGS in this function is deprecated
+    [-Wdeprecated-declarations]
+      343 |     ptr_t *e = reinterpret_cast<ptr_t*>(q);
+          |                                      ^
+    /usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:340:1:
+    note: declared here
+      340 | rb_thread_create(type *q, void *w)
+          | ^~~~~~~~~~~~~~~~
+    linking shared-object mini_racer_extension.so
+    g++: error:
+    /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/gems/2.7.0/gems/libv8-node-16.10.0.0-x86_64-linux-musl/vendor/v8/x86_64-linux/libv8/obj/libv8_monolith.a:
+    No such file or directory
+    make: *** [Makefile:262: mini_racer_extension.so] Error 1
+    
+    make failed, exit code 2
+    
+    Gem files will remain installed in
+    /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/gems/2.7.0/gems/mini_racer-0.6.3 for
+    inspection.
+    Results logged to
+    /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/gems/2.7.0/extensions/x86_64-linux/2.7.0/mini_racer-0.6.3/gem_make.out
+    
+    An error occurred while installing mini_racer (0.6.3), and Bundler cannot
+    continue.
+    Make sure that `gem install mini_racer -v '0.6.3' --source
+    'https://rubygems.org/'` succeeds before bundling.
+    
+    In Gemfile:
+      mini_racer
+    /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/spec_set.rb:86:in `block in materialize': Could not find mini_racer-0.6.3 in any of the sources (Bundler::GemNotFound)
+    	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/spec_set.rb:80:in `map!'
+    	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/spec_set.rb:80:in `materialize'
+    	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/definition.rb:170:in `specs'
+    	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/definition.rb:237:in `specs_for'
+    	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/definition.rb:226:in `requested_specs'
+    	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/runtime.rb:101:in `block in definition_method'
+    	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/runtime.rb:20:in `setup'
+    	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler.rb:149:in `setup'
+    	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/setup.rb:20:in `block in <top (required)>'
+    	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/ui/shell.rb:136:in `with_level'
+    	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/ui/shell.rb:88:in `silence'
+    	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/setup.rb:20:in `<top (required)>'
+    	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/rubygems/core_ext/kernel_require.rb:83:in `require'
+    	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/rubygems/core_ext/kernel_require.rb:83:in `require'
+    /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/spec_set.rb:86:in `block in materialize': Could not find mini_racer-0.6.3 in any of the sources (Bundler::GemNotFound)
+    	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/spec_set.rb:80:in `map!'
+    	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/spec_set.rb:80:in `materialize'
+    	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/definition.rb:170:in `specs'
+    	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/definition.rb:237:in `specs_for'
+    	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/definition.rb:226:in `requested_specs'
+    	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/runtime.rb:101:in `block in definition_method'
+    	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/runtime.rb:20:in `setup'
+    	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler.rb:149:in `setup'
+    	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/setup.rb:20:in `block in <top (required)>'
+    	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/ui/shell.rb:136:in `with_level'
+    	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/ui/shell.rb:88:in `silence'
+    	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/setup.rb:20:in `<top (required)>'
+    	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/rubygems/core_ext/kernel_require.rb:83:in `require'
+    	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/rubygems/core_ext/kernel_require.rb:83:in `require'
+    ---- End output of "bash"  ----
+    Ran "bash"  returned 1
+    
+    Resource Declaration:
+    ---------------------
+    # In /var/chef/cache/cookbooks/errbit-last/recipes/errbit.rb
+    
+     22: bash 'errbitStart' do
+     23:    code <<-EOF
+     24:     cd /errbit_from_git
+     25:     export PATH="/usr/local/rvm/rubies/ruby-2.7.6/bin:$PATH"
+     26:     bundle install
+     27:     bundle exec rake errbit:bootstrap
+     28:     bundle exec rails server  
+     29: EOF
+     30: end
+     31: 
+    
+    Compiled Resource:
+    ------------------
+    # Declared in /var/chef/cache/cookbooks/errbit-last/recipes/errbit.rb:22:in `from_file'
+    
+    bash("errbitStart") do
+      action [:run]
+      default_guard_interpreter :default
+      interpreter "bash"
+      declared_type :bash
+      cookbook_name "errbit-last"
+      recipe_name "errbit"
+      code "    cd /errbit_from_git\n    export PATH=\"/usr/local/rvm/rubies/ruby-2.7.6/bin:$PATH\"\n    bundle install\n    bundle exec rake errbit:bootstrap\n    bundle exec rails server  \n"
+      domain nil
+      user nil
+    end
+    
+    System Info:
+    ------------
+    chef_version=16.18.0
+    platform=debian
+    platform_version=11
+    ruby=ruby 2.7.5p203 (2021-11-24 revision f69aeb8314) [x86_64-linux]
+    program_name=/usr/bin/chef-client
+    executable=/opt/chef/bin/chef-client
+    
+
+Running handlers:
+[2022-11-06T14:59:10+00:00] ERROR: Running exception handlers
+Running handlers complete
+[2022-11-06T14:59:10+00:00] ERROR: Exception handlers complete
+Chef Infra Client failed. 6 resources updated in 36 seconds
+[2022-11-06T14:59:10+00:00] FATAL: Stacktrace dumped to /var/chef/cache/chef-stacktrace.out
+[2022-11-06T14:59:10+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+[2022-11-06T14:59:10+00:00] FATAL: Mixlib::ShellOut::ShellCommandFailed: bash[errbitStart] (errbit-last::errbit line 22) had an error: Mixlib::ShellOut::ShellCommandFailed: Expected process to exit with [0], but received '1'
+---- Begin output of "bash"  ----
+STDOUT: Fetching gem metadata from https://rubygems.org/.........
+Using rake 13.0.6
+Using concurrent-ruby 1.1.10
+Using i18n 1.12.0
+Using minitest 5.16.3
+Using thread_safe 0.3.6
+Using tzinfo 1.2.10
+Using activesupport 5.0.7.2
+Using builder 3.2.4
+Using erubis 2.7.0
+Using racc 1.6.0
+Using nokogiri 1.13.8 (x86_64-linux)
+Using rails-dom-testing 2.0.3
+Using crass 1.0.6
+Using loofah 2.18.0
+Using rails-html-sanitizer 1.4.3
+Using actionview 5.0.7.2
+Using rack 2.2.4
+Using rack-test 0.6.3
+Using actionpack 5.0.7.2
+Using globalid 1.0.0
+Using activejob 5.0.7.2
+Using mini_mime 1.1.2
+Using mail 2.7.1
+Using actionmailer 5.0.7.2
+Using public_suffix 5.0.0
+Using addressable 2.8.1
+Using css_parser 1.11.0
+Using htmlentities 4.3.4
+Using premailer 1.16.0
+Using actionmailer_inline_css 1.6.0
+Using activemodel 5.0.7.2
+Using activemodel-serializers-xml 1.0.2
+Using arel 7.1.4
+Using activerecord 5.0.7.2
+Using multi_json 1.15.0
+Using airbrake 4.3.8
+Using ast 2.4.2
+Using bcrypt 3.1.18
+Using coderay 1.1.3
+Using erubi 1.11.0
+Using better_errors 2.9.1
+Using bigdecimal 1.4.4
+Using debug_inspector 1.1.0
+Using binding_of_caller 1.0.0
+Using bson 4.15.0
+Using bundler 2.1.4
+Using campy 1.0.0
+Using matrix 0.4.2
+Using regexp_parser 2.5.0
+Using xpath 3.2.0
+Using capybara 3.37.1
+Using cliver 0.3.2
+Using json 2.6.2
+Using docile 1.4.0
+Using simplecov-html 0.10.2
+Using simplecov 0.16.1
+Using sync 0.5.0
+Using tins 1.31.1
+Using term-ansicolor 1.7.1
+Using thor 1.2.1
+Using coveralls 0.8.23
+Using decent_exposure 3.0.4
+Using orm_adapter 0.5.0
+Using method_source 1.0.0
+Using railties 5.0.7.2
+Using responders 3.0.1
+Using warden 1.2.9
+Using devise 4.8.1
+Using diff-lcs 1.5.0
+Using unf_ext 0.0.8.2
+Using unf 0.1.4
+Using domain_name 0.5.20190701
+Using dotenv 2.8.1
+Using dotenv-rails 2.8.1
+Using request_store 1.5.1
+Using ruby2_keywords 0.0.5
+Using draper 4.0.2
+Using launchy 2.5.0
+Using email_spec 2.2.0
+Using errbit_plugin 0.6.0
+Using faraday-em_http 1.0.0
+Using faraday-em_synchrony 1.0.0
+Using faraday-excon 1.1.0
+Using faraday-httpclient 1.0.1
+Using multipart-post 2.2.3
+Using faraday-multipart 1.0.4
+Using faraday-net_http 1.0.1
+Using faraday-net_http_persistent 1.2.0
+Using faraday-patron 1.0.0
+Using faraday-rack 1.0.0
+Using faraday-retry 1.0.3
+Using faraday 1.10.1
+Using sawyer 0.8.2
+Using octokit 4.21.0
+Using errbit_github_plugin 0.3.0
+Using execjs 2.8.1
+Using fabrication 2.30.0
+Using ffi 1.15.5
+Using mime-types-data 3.2022.0105
+Using mime-types 3.4.1
+Using multi_xml 0.6.0
+Using httparty 0.20.0
+Using flowdock 0.7.1
+Using font-awesome-rails 4.7.0.8
+Using temple 0.8.2
+Using tilt 2.0.11
+Using haml 5.2.2
+Using hashie 5.0.0
+Using hoi 0.0.7
+Using hoptoad_notifier 2.4.11
+Using http-accept 1.7.0
+Using http-cookie 1.0.5
+Using jaro_winkler 1.5.4
+Using jquery-rails 4.5.0
+Using jwt 2.5.0
+Using kaminari-core 1.2.2
+Using kaminari-actionview 1.2.2
+Using kaminari-activerecord 1.2.2
+Using kaminari 1.2.2
+Using mongo 2.18.1
+Using mongoid 6.0.3
+Using kaminari-mongoid 1.0.2
+Using libv8-node 16.10.0.0 (x86_64-linux-musl)
+Using rb-fsevent 0.11.1
+Using rb-inotify 0.10.1
+Using listen 3.0.8
+Using rack-contrib 2.3.0
+Using meta_request 0.7.3
+Fetching mini_racer 0.6.3
+Installing mini_racer 0.6.3 with native extensions
+STDERR: Don't run Bundler as root. Bundler can ask for sudo if it is needed, and
+installing your bundle as root will break this application for all non-root
+users on this machine.
+Warning: the running version of Bundler (2.1.4) is older than the version that created the lockfile (2.3.21). We suggest you to upgrade to the version that created the lockfile by running `gem install bundler:2.3.21`.
+Gem::Ext::BuildError: ERROR: Failed to build gem native extension.
+
+current directory:
+/usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/gems/2.7.0/gems/mini_racer-0.6.3/ext/mini_racer_extension
+/usr/local/rvm/rubies/ruby-2.7.6/bin/ruby -I
+/usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0 -r
+./siteconf20221106-3073292-64sgxn.rb extconf.rb
+checking for -lpthread... yes
+checking for whether -Wl,--exclude-libs=ALL  is accepted as LDFLAGS... no
+creating Makefile
+
+current directory:
+/usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/gems/2.7.0/gems/mini_racer-0.6.3/ext/mini_racer_extension
+make "DESTDIR=" clean
+
+current directory:
+/usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/gems/2.7.0/gems/mini_racer-0.6.3/ext/mini_racer_extension
+make "DESTDIR="
+compiling mini_racer_extension.cc
+In file included from
+/usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/ruby.h:2865,
+from
+/usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby.h:33,
+                 from mini_racer_extension.cc:2:
+/usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:
+In function 'VALUE ruby::backward::cxxanyargs::rb_rescue(VALUE (*)(...), VALUE,
+VALUE (*)(...), VALUE)':
+/usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:202:14:
+warning: 'VALUE ruby::backward::cxxanyargs::rb_rescue(VALUE (*)(...), VALUE,
+VALUE (*)(...), VALUE)' is deprecated: Use of ANYARGS in this function is
+deprecated [-Wdeprecated-declarations]
+  202 |     func1_t *t = reinterpret_cast<func1_t*>(q);
+      |              ^
+/usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:198:1:
+note: declared here
+  198 | rb_rescue(type *q, VALUE w, type *e, VALUE r)
+      | ^~~~~~~~~
+/usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:202:42:
+warning: 'VALUE ruby::backward::cxxanyargs::rb_rescue(VALUE (*)(...), VALUE,
+VALUE (*)(...), VALUE)' is deprecated: Use of ANYARGS in this function is
+deprecated [-Wdeprecated-declarations]
+  202 |     func1_t *t = reinterpret_cast<func1_t*>(q);
+      |                                          ^
+/usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:198:1:
+note: declared here
+  198 | rb_rescue(type *q, VALUE w, type *e, VALUE r)
+      | ^~~~~~~~~
+/usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:203:14:
+warning: 'VALUE ruby::backward::cxxanyargs::rb_rescue(VALUE (*)(...), VALUE,
+VALUE (*)(...), VALUE)' is deprecated: Use of ANYARGS in this function is
+deprecated [-Wdeprecated-declarations]
+  203 |     func2_t *y = reinterpret_cast<func2_t*>(e);
+      |              ^
+/usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:198:1:
+note: declared here
+  198 | rb_rescue(type *q, VALUE w, type *e, VALUE r)
+      | ^~~~~~~~~
+/usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:203:42:
+warning: 'VALUE ruby::backward::cxxanyargs::rb_rescue(VALUE (*)(...), VALUE,
+VALUE (*)(...), VALUE)' is deprecated: Use of ANYARGS in this function is
+deprecated [-Wdeprecated-declarations]
+  203 |     func2_t *y = reinterpret_cast<func2_t*>(e);
+      |                                          ^
+/usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:198:1:
+note: declared here
+  198 | rb_rescue(type *q, VALUE w, type *e, VALUE r)
+      | ^~~~~~~~~
+/usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:
+In function 'VALUE ruby::backward::cxxanyargs::rb_rescue2(VALUE (*)(...), VALUE,
+VALUE (*)(...), VALUE, ...)':
+/usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:226:14:
+warning: 'VALUE ruby::backward::cxxanyargs::rb_rescue2(VALUE (*)(...), VALUE,
+VALUE (*)(...), VALUE, ...)' is deprecated: Use of ANYARGS in this function is
+deprecated [-Wdeprecated-declarations]
+  226 |     func1_t *t = reinterpret_cast<func1_t*>(q);
+      |              ^
+/usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:222:1:
+note: declared here
+  222 | rb_rescue2(type *q, VALUE w, type *e, VALUE r, ...)
+      | ^~~~~~~~~~
+/usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:226:42:
+warning: 'VALUE ruby::backward::cxxanyargs::rb_rescue2(VALUE (*)(...), VALUE,
+VALUE (*)(...), VALUE, ...)' is deprecated: Use of ANYARGS in this function is
+deprecated [-Wdeprecated-declarations]
+  226 |     func1_t *t = reinterpret_cast<func1_t*>(q);
+      |                                          ^
+/usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:222:1:
+note: declared here
+  222 | rb_rescue2(type *q, VALUE w, type *e, VALUE r, ...)
+      | ^~~~~~~~~~
+/usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:227:14:
+warning: 'VALUE ruby::backward::cxxanyargs::rb_rescue2(VALUE (*)(...), VALUE,
+VALUE (*)(...), VALUE, ...)' is deprecated: Use of ANYARGS in this function is
+deprecated [-Wdeprecated-declarations]
+  227 |     func2_t *y = reinterpret_cast<func2_t*>(e);
+      |              ^
+/usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:222:1:
+note: declared here
+  222 | rb_rescue2(type *q, VALUE w, type *e, VALUE r, ...)
+      | ^~~~~~~~~~
+/usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:227:42:
+warning: 'VALUE ruby::backward::cxxanyargs::rb_rescue2(VALUE (*)(...), VALUE,
+VALUE (*)(...), VALUE, ...)' is deprecated: Use of ANYARGS in this function is
+deprecated [-Wdeprecated-declarations]
+  227 |     func2_t *y = reinterpret_cast<func2_t*>(e);
+      |                                          ^
+/usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:222:1:
+note: declared here
+  222 | rb_rescue2(type *q, VALUE w, type *e, VALUE r, ...)
+      | ^~~~~~~~~~
+/usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:
+In function 'VALUE ruby::backward::cxxanyargs::rb_ensure(VALUE (*)(...), VALUE,
+VALUE (*)(...), VALUE)':
+/usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:251:14:
+warning: 'VALUE ruby::backward::cxxanyargs::rb_ensure(VALUE (*)(...), VALUE,
+VALUE (*)(...), VALUE)' is deprecated: Use of ANYARGS in this function is
+deprecated [-Wdeprecated-declarations]
+  251 |     func1_t *t = reinterpret_cast<func1_t*>(q);
+      |              ^
+/usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:248:1:
+note: declared here
+  248 | rb_ensure(type *q, VALUE w, type *e, VALUE r)
+      | ^~~~~~~~~
+/usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:251:42:
+warning: 'VALUE ruby::backward::cxxanyargs::rb_ensure(VALUE (*)(...), VALUE,
+VALUE (*)(...), VALUE)' is deprecated: Use of ANYARGS in this function is
+deprecated [-Wdeprecated-declarations]
+  251 |     func1_t *t = reinterpret_cast<func1_t*>(q);
+      |                                          ^
+/usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:248:1:
+note: declared here
+  248 | rb_ensure(type *q, VALUE w, type *e, VALUE r)
+      | ^~~~~~~~~
+/usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:252:14:
+warning: 'VALUE ruby::backward::cxxanyargs::rb_ensure(VALUE (*)(...), VALUE,
+VALUE (*)(...), VALUE)' is deprecated: Use of ANYARGS in this function is
+deprecated [-Wdeprecated-declarations]
+  252 |     func1_t *y = reinterpret_cast<func1_t*>(e);
+      |              ^
+/usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:248:1:
+note: declared here
+  248 | rb_ensure(type *q, VALUE w, type *e, VALUE r)
+      | ^~~~~~~~~
+/usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:252:42:
+warning: 'VALUE ruby::backward::cxxanyargs::rb_ensure(VALUE (*)(...), VALUE,
+VALUE (*)(...), VALUE)' is deprecated: Use of ANYARGS in this function is
+deprecated [-Wdeprecated-declarations]
+  252 |     func1_t *y = reinterpret_cast<func1_t*>(e);
+      |                                          ^
+/usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:248:1:
+note: declared here
+  248 | rb_ensure(type *q, VALUE w, type *e, VALUE r)
+      | ^~~~~~~~~
+/usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:
+In function 'VALUE ruby::backward::cxxanyargs::rb_thread_create(VALUE (*)(...),
+void*)':
+/usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:343:12:
+warning: 'VALUE ruby::backward::cxxanyargs::rb_thread_create(VALUE (*)(...),
+void*)' is deprecated: Use of ANYARGS in this function is deprecated
+[-Wdeprecated-declarations]
+  343 |     ptr_t *e = reinterpret_cast<ptr_t*>(q);
+      |            ^
+/usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:340:1:
+note: declared here
+  340 | rb_thread_create(type *q, void *w)
+      | ^~~~~~~~~~~~~~~~
+/usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:343:38:
+warning: 'VALUE ruby::backward::cxxanyargs::rb_thread_create(VALUE (*)(...),
+void*)' is deprecated: Use of ANYARGS in this function is deprecated
+[-Wdeprecated-declarations]
+  343 |     ptr_t *e = reinterpret_cast<ptr_t*>(q);
+      |                                      ^
+/usr/local/rvm/rubies/ruby-2.7.6/include/ruby-2.7.0/ruby/backward/cxxanyargs.hpp:340:1:
+note: declared here
+  340 | rb_thread_create(type *q, void *w)
+      | ^~~~~~~~~~~~~~~~
+linking shared-object mini_racer_extension.so
+g++: error:
+/usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/gems/2.7.0/gems/libv8-node-16.10.0.0-x86_64-linux-musl/vendor/v8/x86_64-linux/libv8/obj/libv8_monolith.a:
+No such file or directory
+make: *** [Makefile:262: mini_racer_extension.so] Error 1
+
+make failed, exit code 2
+
+Gem files will remain installed in
+/usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/gems/2.7.0/gems/mini_racer-0.6.3 for
+inspection.
+Results logged to
+/usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/gems/2.7.0/extensions/x86_64-linux/2.7.0/mini_racer-0.6.3/gem_make.out
+
+An error occurred while installing mini_racer (0.6.3), and Bundler cannot
+continue.
+Make sure that `gem install mini_racer -v '0.6.3' --source
+'https://rubygems.org/'` succeeds before bundling.
+
+In Gemfile:
+  mini_racer
+/usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/spec_set.rb:86:in `block in materialize': Could not find mini_racer-0.6.3 in any of the sources (Bundler::GemNotFound)
+	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/spec_set.rb:80:in `map!'
+	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/spec_set.rb:80:in `materialize'
+	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/definition.rb:170:in `specs'
+	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/definition.rb:237:in `specs_for'
+	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/definition.rb:226:in `requested_specs'
+	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/runtime.rb:101:in `block in definition_method'
+	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/runtime.rb:20:in `setup'
+	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler.rb:149:in `setup'
+	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/setup.rb:20:in `block in <top (required)>'
+	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/ui/shell.rb:136:in `with_level'
+	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/ui/shell.rb:88:in `silence'
+	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/setup.rb:20:in `<top (required)>'
+	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/rubygems/core_ext/kernel_require.rb:83:in `require'
+	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/rubygems/core_ext/kernel_require.rb:83:in `require'
+/usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/spec_set.rb:86:in `block in materialize': Could not find mini_racer-0.6.3 in any of the sources (Bundler::GemNotFound)
+	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/spec_set.rb:80:in `map!'
+	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/spec_set.rb:80:in `materialize'
+	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/definition.rb:170:in `specs'
+	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/definition.rb:237:in `specs_for'
+	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/definition.rb:226:in `requested_specs'
+	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/runtime.rb:101:in `block in definition_method'
+	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/runtime.rb:20:in `setup'
+	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler.rb:149:in `setup'
+	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/setup.rb:20:in `block in <top (required)>'
+	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/ui/shell.rb:136:in `with_level'
+	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/ui/shell.rb:88:in `silence'
+	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/bundler/setup.rb:20:in `<top (required)>'
+	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/rubygems/core_ext/kernel_require.rb:83:in `require'
+	from /usr/local/rvm/rubies/ruby-2.7.6/lib/ruby/2.7.0/rubygems/core_ext/kernel_require.rb:83:in `require'
+---- End output of "bash"  ----
+Ran "bash"  returned 1
+root@testvm:/home/gor# 
